@@ -7,7 +7,7 @@ namespace Setono\GLS\Webservice\Factory;
 use SoapClient;
 use SoapFault;
 
-final class SoapClientFactory
+final class SoapClientFactory implements SoapClientFactoryInterface
 {
     /**
      * @var string
