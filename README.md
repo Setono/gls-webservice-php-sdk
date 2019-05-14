@@ -33,12 +33,12 @@ $client = new Client($factory->create());
 $parcelShops = $client->searchNearestParcelShops('Street', '12313', 'DK');
 ```
 
-[ico-version]: https://poser.pugx.org/setono/sylius-facebook-tracking-plugin/v/stable
-[ico-unstable-version]: https://poser.pugx.org/setono/sylius-facebook-tracking-plugin/v/unstable
-[ico-license]: https://poser.pugx.org/setono/sylius-facebook-tracking-plugin/license
-[ico-travis]: https://travis-ci.com/Setono/SyliusFacebookTrackingPlugin.svg?branch=master
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/SyliusFacebookTrackingPlugin.svg?style=flat-square
+[ico-version]: https://poser.pugx.org/setono/gls-webservice-php-sdk/v/stable
+[ico-unstable-version]: https://poser.pugx.org/setono/gls-webservice-php-sdk/v/unstable
+[ico-license]: https://poser.pugx.org/setono/gls-webservice-php-sdk/license
+[ico-travis]: https://travis-ci.com/Setono/gls-webservice-php-sdk.svg?branch=master
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/gls-webservice-php-sdk.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/setono/sylius-facebook-tracking-plugin
-[link-travis]: https://travis-ci.com/Setono/SyliusFacebookTrackingPlugin
-[link-code-quality]: https://scrutinizer-ci.com/g/Setono/SyliusFacebookTrackingPlugin
+[link-packagist]: https://packagist.org/packages/setono/gls-webservice-php-sdk
+[link-travis]: https://travis-ci.com/Setono/gls-webservice-php-sdk
+[link-code-quality]: https://scrutinizer-ci.com/g/Setono/gls-webservice-php-sdk
