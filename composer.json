@@ -1,0 +1,45 @@
+{
+    "name": "setono/gls-webservice-php-sdk",
+    "type": "library",
+    "description": "A PHP SDK for the GLS webservice",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joachim Løvgaard",
+            "email": "joachim@loevgaard.dk"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "ext-dom": "*",
+        "ext-soap": "*",
+        "guzzlehttp/psr7": "^1.5",
+        "psr/http-message": "^1.0"
+    },
+    "require-dev": {
+        "localheinz/composer-normalize": "^1.1",
+        "phpstan/phpstan": "^0.10.3",
+        "phpunit/phpunit": "^8.0",
+        "symplify/easy-coding-standard": "^5.1"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Setono\\GLS\\Webservice\\": "src/"
+        }
+    },
+    "prefer-stable": true,
+    "scripts": {
+        "analyse": "./vendor/bin/phpstan analyse -c phpstan.neon -l max src",
+        "check-style": "./vendor/bin/ecs check --ansi src/ tests/",
+        "fix-style": "./vendor/bin/ecs check --fix --ansi src/ tests/",
+        "test": "./vendor/bin/phpunit"
+    }
+}

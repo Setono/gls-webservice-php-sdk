@@ -1,0 +1,4 @@
+parameters:
+    excludes_analyse:
+        # Test dependencies
+        - 'tests/**.php'
