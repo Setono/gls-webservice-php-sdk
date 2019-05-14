@@ -15,11 +15,11 @@ interface ClientInterface
     /**
      * Returns all ParcelShops in a given country.
      *
-     * @param string $countryIso The alpha 2 country code (https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
+     * @param string $countryCode The alpha 2 country code (https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
      *
      * @return ParcelShop[]
      */
-    public function getAllParcelShops(string $countryIso): array;
+    public function getAllParcelShops(string $countryCode): array;
 
     /**
      * Get one ParcelShop.
@@ -37,22 +37,22 @@ interface ClientInterface
      *
      * @param string $street
      * @param string $zipCode
-     * @param string $countryIso The alpha 2 country code (https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
+     * @param string $countryCode The alpha 2 country code (https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
      * @param int    $amount
      *
      * @return ParcelShop[]
      */
-    public function getParcelShopDropPoint(string $street, string $zipCode, string $countryIso, int $amount): array;
+    public function getParcelShopDropPoint(string $street, string $zipCode, string $countryCode, int $amount): array;
 
     /**
      * Returns all ParcelShops in a zip code - or the 3 nearest in other zip codes.
      *
      * @param string $zipCode
-     * @param string $countryIso The alpha 2 country code (https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
+     * @param string $countryCode The alpha 2 country code (https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
      *
      * @return ParcelShop[]
      */
-    public function getParcelShopsInZipCode(string $zipCode, string $countryIso): array;
+    public function getParcelShopsInZipCode(string $zipCode, string $countryCode): array;
 
     /**
      * Search for nearest ParcelShops to an address.
@@ -62,10 +62,10 @@ interface ClientInterface
      *
      * @param string $street
      * @param string $zipCode
-     * @param string $countryIso
+     * @param string $countryCode
      * @param int    $amount
      *
      * @return ParcelShop[]
      */
-    public function searchNearestParcelShops(string $street, string $zipCode, string $countryIso, int $amount): array;
+    public function searchNearestParcelShops(string $street, string $zipCode, string $countryCode, int $amount): array;
 }

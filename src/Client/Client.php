@@ -9,7 +9,6 @@ use Setono\GLS\Webservice\Model\ParcelShop;
 use Setono\GLS\Webservice\Response\Response;
 use SoapClient;
 use SoapFault;
-use RuntimeException;
 
 final class Client implements ClientInterface
 {
@@ -23,9 +22,27 @@ final class Client implements ClientInterface
         $this->soapClient = $soapClient;
     }
 
-    public function getAllParcelShops(string $countryIso): array
+    public function getAllParcelShops(string $countryCode): array
     {
-        throw new RuntimeException('Method not implemented. Please do so in a pull request on GitHub ;)');
+        $response = $this->sendRequest('GetAllParcelShops', [
+            'countryIso3166A2' => $countryCode,
+        ]);
+
+        $parcelShops = [];
+
+        if (200 !== $response->getStatusCode()) {
+            return $parcelShops;
+        }
+
+        if (null === $response->getResult()) {
+            return $parcelShops;
+        }
+
+        foreach ($response->getResult()->GetAllParcelShopsResult->PakkeshopData as $parcelShop) {
+            $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
+        }
+
+        return $parcelShops;
     }
 
     public function getOneParcelShop(string $parcelShopNumber): ParcelShop
@@ -42,22 +59,62 @@ final class Client implements ClientInterface
         return ParcelShop::createFromStdClass($response->getResult()->GetOneParcelShopResult);
     }
 
-    public function getParcelShopDropPoint(string $street, string $zipCode, string $countryIso, int $amount): array
+    public function getParcelShopDropPoint(string $street, string $zipCode, string $countryCode, int $amount): array
     {
-        throw new RuntimeException('Method not implemented. Please do so in a pull request on GitHub ;)');
+        $response = $this->sendRequest('GetParcelShopDropPoint', [
+            'street' => $street,
+            'zipcode' => $zipCode,
+            'countryIso3166A2' => $countryCode,
+            'Amount' => $amount,
+        ]);
+
+        $parcelShops = [];
+
+        if (200 !== $response->getStatusCode()) {
+            return $parcelShops;
+        }
+
+        if (null === $response->getResult()) {
+            return $parcelShops;
+        }
+
+        foreach ($response->getResult()->GetParcelShopDropPointResult->parcelshops->PakkeshopData as $parcelShop) {
+            $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
+        }
+
+        return $parcelShops;
     }
 
-    public function getParcelShopsInZipCode(string $zipCode, string $countryIso): array
+    public function getParcelShopsInZipCode(string $zipCode, string $countryCode): array
     {
-        throw new RuntimeException('Method not implemented. Please do so in a pull request on GitHub ;)');
+        $response = $this->sendRequest('GetParcelShopsInZipCode', [
+            'zipcode' => $zipCode,
+            'countryIso3166A2' => $countryCode,
+        ]);
+
+        $parcelShops = [];
+
+        if (200 !== $response->getStatusCode()) {
+            return $parcelShops;
+        }
+
+        if (null === $response->getResult()) {
+            return $parcelShops;
+        }
+
+        foreach ($response->getResult()->GetParcelShopsInZipcodeResult->PakkeshopData as $parcelShop) {
+            $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
+        }
+
+        return $parcelShops;
     }
 
-    public function searchNearestParcelShops(string $street, string $zipCode, string $countryIso, int $amount = 10): array
+    public function searchNearestParcelShops(string $street, string $zipCode, string $countryCode, int $amount = 10): array
     {
         $response = $this->sendRequest('SearchNearestParcelShops', [
             'street' => $street,
             'zipcode' => $zipCode,
-            'countryIso3166A2' => $countryIso,
+            'countryIso3166A2' => $countryCode,
             'Amount' => $amount,
         ]);
 
