@@ -20,7 +20,7 @@
         "localheinz/composer-normalize": "^1.1",
         "phpstan/phpstan": "^0.10.3",
         "phpunit/phpunit": "^8.0",
-        "symplify/easy-coding-standard": "^5.1"
+        "symplify/easy-coding-standard": "^5.1 || ^7.0"
     },
     "config": {
         "sort-packages": true
