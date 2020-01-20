@@ -3,7 +3,7 @@
 [![Latest Version][ico-version]][link-packagist]
 [![Latest Unstable Version][ico-unstable-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
-[![Build Status][ico-travis]][link-travis]
+[![Build Status][ico-github-actions]][link-github-actions]
 [![Quality Score][ico-code-quality]][link-code-quality]
 
 A PHP SDK for the [GLS webservice](https://www.gls.dk/webservices_v4/wsShopFinder.asmx) which is very commonly used to search for nearby pickup points.
@@ -36,9 +36,9 @@ $parcelShops = $client->searchNearestParcelShops('Street', '12313', 'DK');
 [ico-version]: https://poser.pugx.org/setono/gls-webservice-php-sdk/v/stable
 [ico-unstable-version]: https://poser.pugx.org/setono/gls-webservice-php-sdk/v/unstable
 [ico-license]: https://poser.pugx.org/setono/gls-webservice-php-sdk/license
-[ico-travis]: https://travis-ci.com/Setono/gls-webservice-php-sdk.svg?branch=master
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/gls-webservice-php-sdk.svg?style=flat-square
+[ico-github-actions]: https://github.com/Setono/gls-webservice-php-sdk/workflows/build/badge.svg
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/Setono/gls-webservice-php-sdk.svg
 
 [link-packagist]: https://packagist.org/packages/setono/gls-webservice-php-sdk
-[link-travis]: https://travis-ci.com/Setono/gls-webservice-php-sdk
+[link-github-actions]: https://github.com/Setono/gls-webservice-php-sdk/actions
 [link-code-quality]: https://scrutinizer-ci.com/g/Setono/gls-webservice-php-sdk
