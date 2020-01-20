@@ -20,11 +20,13 @@ final class SoapClientFactory implements SoapClientFactoryInterface
     /**
      * @throws SoapFault
      */
-    public function create(): SoapClient
+    public function create(array $options = []): SoapClient
     {
-        return new SoapClient($this->wsdl, [
+        $options = array_merge([
             'trace' => true,
             'exceptions' => true,
-        ]);
+        ], $options);
+
+        return new SoapClient($this->wsdl, $options);
     }
 }
