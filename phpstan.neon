@@ -1,4 +1,14 @@
+includes:
+	- vendor/korbeil/phpstan-generic-rules/extension.neon
+	- vendor/phpstan/phpstan-strict-rules/rules.neon
+
 parameters:
-    excludes_analyse:
-        # Test dependencies
-        - 'tests/**.php'
+	checkMissingIterableValueType: false
+	reportUnmatchedIgnoredErrors: true
+
+	excludes_analyse:
+		# Test dependencies
+		- 'tests/**.php'
+
+	ignoreErrors:
+		- '/Variable method call on SoapClient\./'

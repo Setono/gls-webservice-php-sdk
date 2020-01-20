@@ -8,19 +8,13 @@ use stdClass;
 
 final class OpeningHours
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $day;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $openFrom;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $openTo;
 
     public function __construct(string $day, string $openFrom, string $openTo)

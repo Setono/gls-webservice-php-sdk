@@ -12,9 +12,7 @@ use SoapFault;
 
 final class Client implements ClientInterface
 {
-    /**
-     * @var SoapClient
-     */
+    /** @var SoapClient */
     private $soapClient;
 
     public function __construct(SoapClient $soapClient)

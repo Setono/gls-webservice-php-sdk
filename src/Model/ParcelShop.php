@@ -8,64 +8,40 @@ use stdClass;
 
 final class ParcelShop
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $number;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $companyName;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $streetName;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $streetName2;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $zipCode;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $city;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $countryCode;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $telephone;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $longitude;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $latitude;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $distanceMetersAsTheCrowFlies;
 
-    /**
-     * @var OpeningHours[]
-     */
+    /** @var OpeningHours[] */
     private $openingHours;
 
     public function __construct(
@@ -103,8 +79,10 @@ final class ParcelShop
     {
         $openingHours = [];
 
-        foreach ($result->OpeningHours->Weekday as $weekday) {
-            $openingHours[] = OpeningHours::createFromStdClass($weekday);
+        if (isset($result->OpeningHours, $result->OpeningHours->Weekday) && is_array($result->OpeningHours->Weekday)) {
+            foreach ($result->OpeningHours->Weekday as $weekday) {
+                $openingHours[] = OpeningHours::createFromStdClass($weekday);
+            }
         }
 
         return new self(

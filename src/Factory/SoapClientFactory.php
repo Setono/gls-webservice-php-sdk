@@ -9,9 +9,7 @@ use SoapFault;
 
 final class SoapClientFactory implements SoapClientFactoryInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $wsdl;
 
     public function __construct(string $wsdl)
@@ -20,8 +18,6 @@ final class SoapClientFactory implements SoapClientFactoryInterface
     }
 
     /**
-     * @return SoapClient
-     *
      * @throws SoapFault
      */
     public function create(): SoapClient

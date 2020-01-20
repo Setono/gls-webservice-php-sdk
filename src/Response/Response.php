@@ -10,19 +10,15 @@ use stdClass;
 
 final class Response
 {
-    /**
-     * @var PsrResponse
-     */
+    /** @var PsrResponse */
     private $response;
 
-    /**
-     * @var stdClass|null
-     */
+    /** @var stdClass|null */
     private $result;
 
     public function __construct(string $headers, string $body, ?stdClass $result)
     {
-        $this->response = parse_response($headers."\r\n".$body);
+        $this->response = parse_response($headers . "\r\n" . $body);
         $this->result = $result;
     }
 

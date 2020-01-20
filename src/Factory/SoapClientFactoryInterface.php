@@ -10,8 +10,6 @@ interface SoapClientFactoryInterface
 {
     /**
      * Creates a SoapClient instance.
-     *
-     * @return SoapClient
      */
     public function create(): SoapClient;
 }

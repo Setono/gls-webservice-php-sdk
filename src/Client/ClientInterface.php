@@ -24,9 +24,7 @@ interface ClientInterface
     /**
      * Get one ParcelShop.
      *
-     * @param string $parcelShopNumber
      *
-     * @return ParcelShop
      *
      * @throws ParcelShopNotFoundException
      */
@@ -35,10 +33,7 @@ interface ClientInterface
     /**
      * Get ParcelShop drop point close to an address.
      *
-     * @param string $street
-     * @param string $zipCode
      * @param string $countryCode The alpha 2 country code (https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
-     * @param int    $amount
      *
      * @return ParcelShop[]
      */
@@ -47,7 +42,6 @@ interface ClientInterface
     /**
      * Returns all ParcelShops in a zip code - or the 3 nearest in other zip codes.
      *
-     * @param string $zipCode
      * @param string $countryCode The alpha 2 country code (https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
      *
      * @return ParcelShop[]
@@ -60,10 +54,6 @@ interface ClientInterface
      * NOTICE: It looks like (judging by the returned results) this returns the same results as getParcelShopDropPoint
      * but GLS' IT support does not know, so the safest bet is to use this method because this is the one they recommend
      *
-     * @param string $street
-     * @param string $zipCode
-     * @param string $countryCode
-     * @param int    $amount
      *
      * @return ParcelShop[]
      */
