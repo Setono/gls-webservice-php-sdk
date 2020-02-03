@@ -6,7 +6,7 @@ namespace Setono\GLS\Webservice\Exception;
 
 use InvalidArgumentException;
 
-final class ParcelShopNotFoundException extends InvalidArgumentException
+final class ParcelShopNotFoundException extends InvalidArgumentException implements ExceptionInterface
 {
     public function __construct(string $parcelShopNumber)
     {

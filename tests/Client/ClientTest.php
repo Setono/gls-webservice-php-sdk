@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Setono\GLS\Webservice\Client;
 
 use PHPUnit\Framework\TestCase;
+use Setono\GLS\Webservice\Exception\ConnectionException;
 use Setono\GLS\Webservice\Exception\ParcelShopNotFoundException;
 use Setono\GLS\Webservice\Factory\SoapClientFactory;
 use Setono\GLS\Webservice\Model\ParcelShop;
+use SoapClient;
+use SoapFault;
 
 final class ClientTest extends TestCase
 {
@@ -70,10 +73,41 @@ final class ClientTest extends TestCase
         }
     }
 
-    private function getClient(): Client
-    {
-        $factory = new SoapClientFactory('https://www.gls.dk/webservices_v4/wsShopFinder.asmx?WSDL');
+    /**************
+     * Misc tests *
+     *************/
 
-        return new Client($factory->create());
+    /**
+     * @test
+     */
+    public function it_handles_timeout(): void
+    {
+        $soapClient = new class() extends SoapClient {
+            public function __construct($wsdl = 'https://www.gls.dk/webservices_v4/wsShopFinder.asmx?WSDL', array $options = null)
+            {
+                parent::__construct($wsdl, []);
+            }
+
+            public function __doRequest($request, $location, $action, $version, $one_way = 0)
+            {
+                throw new SoapFault('HTTP', 'Could not connect to host');
+            }
+        };
+
+        $client = $this->getClient($soapClient);
+
+        $this->expectException(ConnectionException::class);
+
+        $client->getAllParcelShops('DK');
+    }
+
+    private function getClient(SoapClient $soapClient = null): Client
+    {
+        if (null === $soapClient) {
+            $factory = new SoapClientFactory('https://www.gls.dk/webservices_v4/wsShopFinder.asmx?WSDL');
+            $soapClient = $factory->create();
+        }
+
+        return new Client($soapClient);
     }
 }
