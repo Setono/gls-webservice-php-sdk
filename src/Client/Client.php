@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Setono\GLS\Webservice\Client;
 
+use Setono\GLS\Webservice\Exception\ClientException;
+use Setono\GLS\Webservice\Exception\ConnectionException;
+use Setono\GLS\Webservice\Exception\ExceptionInterface;
 use Setono\GLS\Webservice\Exception\ParcelShopNotFoundException;
+use Setono\GLS\Webservice\Exception\SoapException;
 use Setono\GLS\Webservice\Model\ParcelShop;
 use Setono\GLS\Webservice\Response\Response;
 use SoapClient;
@@ -22,115 +26,137 @@ final class Client implements ClientInterface
 
     public function getAllParcelShops(string $countryCode): array
     {
-        $response = $this->sendRequest('GetAllParcelShops', [
-            'countryIso3166A2' => $countryCode,
-        ]);
+        try {
+            $response = $this->sendRequest('GetAllParcelShops', [
+                'countryIso3166A2' => $countryCode,
+            ]);
 
-        $parcelShops = [];
+            $result = $response->getResult();
+            if (null === $result) {
+                return [];
+            }
 
-        if (200 !== $response->getStatusCode()) {
+            $parcelShops = [];
+            foreach ($result->GetAllParcelShopsResult->PakkeshopData as $parcelShop) {
+                $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
+            }
+
             return $parcelShops;
-        }
+        } catch (ClientException $e) {
+            if (!$e->getResponse()->isOk() || $e->getResponse()->getResult() === null) {
+                return [];
+            }
 
-        if (null === $response->getResult()) {
-            return $parcelShops;
+            throw $e;
         }
-
-        foreach ($response->getResult()->GetAllParcelShopsResult->PakkeshopData as $parcelShop) {
-            $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
-        }
-
-        return $parcelShops;
     }
 
     public function getOneParcelShop(string $parcelShopNumber): ParcelShop
     {
-        $response = $this->sendRequest('GetOneParcelShop', ['ParcelShopNumber' => $parcelShopNumber]);
-        if (200 !== $response->getStatusCode()) {
-            throw new ParcelShopNotFoundException($parcelShopNumber);
-        }
+        try {
+            $response = $this->sendRequest('GetOneParcelShop', ['ParcelShopNumber' => $parcelShopNumber]);
+            $result = $response->getResult();
 
-        if (null === $response->getResult()) {
-            throw new ParcelShopNotFoundException($parcelShopNumber);
-        }
+            if (null === $result) {
+                throw new ParcelShopNotFoundException($parcelShopNumber);
+            }
 
-        return ParcelShop::createFromStdClass($response->getResult()->GetOneParcelShopResult);
+            return ParcelShop::createFromStdClass($result->GetOneParcelShopResult);
+        } catch (ClientException $e) {
+            if ($e->getResponse()->is404() || $e->getResponse()->getResult() === null) {
+                throw new ParcelShopNotFoundException($parcelShopNumber);
+            }
+
+            throw $e;
+        }
     }
 
     public function getParcelShopDropPoint(string $street, string $zipCode, string $countryCode, int $amount): array
     {
-        $response = $this->sendRequest('GetParcelShopDropPoint', [
-            'street' => $street,
-            'zipcode' => $zipCode,
-            'countryIso3166A2' => $countryCode,
-            'Amount' => $amount,
-        ]);
+        try {
+            $response = $this->sendRequest('GetParcelShopDropPoint', [
+                'street' => $street,
+                'zipcode' => $zipCode,
+                'countryIso3166A2' => $countryCode,
+                'Amount' => $amount,
+            ]);
 
-        $parcelShops = [];
+            $result = $response->getResult();
+            if (null === $result) {
+                return [];
+            }
 
-        if (200 !== $response->getStatusCode()) {
+            $parcelShops = [];
+            foreach ($result->GetParcelShopDropPointResult->parcelshops->PakkeshopData as $parcelShop) {
+                $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
+            }
+
             return $parcelShops;
-        }
+        } catch (ClientException $e) {
+            if (!$e->getResponse()->isOk() || $e->getResponse()->getResult() === null) {
+                return [];
+            }
 
-        if (null === $response->getResult()) {
-            return $parcelShops;
+            throw $e;
         }
-
-        foreach ($response->getResult()->GetParcelShopDropPointResult->parcelshops->PakkeshopData as $parcelShop) {
-            $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
-        }
-
-        return $parcelShops;
     }
 
     public function getParcelShopsInZipCode(string $zipCode, string $countryCode): array
     {
-        $response = $this->sendRequest('GetParcelShopsInZipCode', [
-            'zipcode' => $zipCode,
-            'countryIso3166A2' => $countryCode,
-        ]);
+        try {
+            $response = $this->sendRequest('GetParcelShopsInZipCode', [
+                'zipcode' => $zipCode,
+                'countryIso3166A2' => $countryCode,
+            ]);
 
-        $parcelShops = [];
+            $result = $response->getResult();
+            if (null === $result) {
+                return [];
+            }
 
-        if (200 !== $response->getStatusCode()) {
+            $parcelShops = [];
+            foreach ($result->GetParcelShopsInZipcodeResult->PakkeshopData as $parcelShop) {
+                $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
+            }
+
             return $parcelShops;
-        }
+        } catch (ClientException $e) {
+            if (!$e->getResponse()->isOk() || $e->getResponse()->getResult() === null) {
+                return [];
+            }
 
-        if (null === $response->getResult()) {
-            return $parcelShops;
+            throw $e;
         }
-
-        foreach ($response->getResult()->GetParcelShopsInZipcodeResult->PakkeshopData as $parcelShop) {
-            $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
-        }
-
-        return $parcelShops;
     }
 
     public function searchNearestParcelShops(string $street, string $zipCode, string $countryCode, int $amount = 10): array
     {
-        $response = $this->sendRequest('SearchNearestParcelShops', [
-            'street' => $street,
-            'zipcode' => $zipCode,
-            'countryIso3166A2' => $countryCode,
-            'Amount' => $amount,
-        ]);
+        try {
+            $response = $this->sendRequest('SearchNearestParcelShops', [
+                'street' => $street,
+                'zipcode' => $zipCode,
+                'countryIso3166A2' => $countryCode,
+                'Amount' => $amount,
+            ]);
 
-        $parcelShops = [];
+            $result = $response->getResult();
+            if (null === $result) {
+                return [];
+            }
 
-        if (200 !== $response->getStatusCode()) {
+            $parcelShops = [];
+            foreach ($result->SearchNearestParcelShopsResult->parcelshops->PakkeshopData as $parcelShop) {
+                $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
+            }
+
             return $parcelShops;
-        }
+        } catch (ClientException $e) {
+            if (!$e->getResponse()->isOk() || $e->getResponse()->getResult() === null) {
+                return [];
+            }
 
-        if (null === $response->getResult()) {
-            return $parcelShops;
+            throw $e;
         }
-
-        foreach ($response->getResult()->SearchNearestParcelShopsResult->parcelshops->PakkeshopData as $parcelShop) {
-            $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
-        }
-
-        return $parcelShops;
     }
 
     private function sendRequest(string $method, array $arguments = []): Response
@@ -139,9 +165,34 @@ final class Client implements ClientInterface
 
         try {
             $result = $this->soapClient->{$method}($arguments);
-        } catch (SoapFault $exception) {
-        } finally {
+
             return new Response($this->soapClient->__getLastResponseHeaders(), $this->soapClient->__getLastResponse(), $result);
+        } catch (SoapFault $soapFault) {
+            throw $this->parseException($soapFault);
         }
+    }
+
+    private function parseException(SoapFault $soapFault): ExceptionInterface
+    {
+        $message = $soapFault->getMessage();
+
+        if ('Could not connect to host' === $message) {
+            return new ConnectionException($soapFault);
+        }
+
+        /**
+         * The response are null if no response was fetched (i.e. no connection)
+         *
+         * @var string|null
+         */
+        $responseHeaders = $this->soapClient->__getLastResponseHeaders();
+
+        if ($responseHeaders !== null) {
+            return new ClientException(
+                $soapFault, new Response($responseHeaders, $this->soapClient->__getLastResponse(), null)
+            );
+        }
+
+        return new SoapException($soapFault, $soapFault->getMessage());
     }
 }

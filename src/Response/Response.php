@@ -31,4 +31,14 @@ final class Response
     {
         return $this->result;
     }
+
+    public function isOk(): bool
+    {
+        return $this->getStatusCode() === 200;
+    }
+
+    public function is404(): bool
+    {
+        return $this->getStatusCode() === 404;
+    }
 }
