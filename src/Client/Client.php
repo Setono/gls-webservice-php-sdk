@@ -37,8 +37,14 @@ final class Client implements ClientInterface
             }
 
             $parcelShops = [];
-            foreach ($result->GetAllParcelShopsResult->PakkeshopData as $parcelShop) {
-                $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
+            foreach ($result->GetAllParcelShopsResult as $parcelShopsResult) {
+                if (!isset($parcelShopsResult->PakkeshopData)) {
+                    continue;
+                }
+
+                foreach ($parcelShopsResult->PakkeshopData as $parcelShop) {
+                    $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
+                }
             }
 
             return $parcelShops;
