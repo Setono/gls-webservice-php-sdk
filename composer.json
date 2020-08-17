@@ -14,27 +14,29 @@
         "ext-dom": "*",
         "ext-soap": "*",
         "guzzlehttp/psr7": "^1.5",
-        "psr/http-message": "^1.0"
+        "psr/http-message": "^1.0",
+        "thecodingmachine/safe": "^1.0"
     },
     "require-dev": {
-        "ergebnis/composer-normalize": "^2.0",
-        "korbeil/phpstan-generic-rules": "^0.2.2",
-        "phpstan/phpstan": "^0.12",
-        "phpstan/phpstan-strict-rules": "^0.12",
         "phpunit/phpunit": "^8.0",
-        "sylius-labs/coding-standard": "^3.1"
+        "setono/code-quality-pack": "^1.4"
     },
     "config": {
         "sort-packages": true
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1-dev"
+            "dev-master": "1.2-dev"
         }
     },
     "autoload": {
         "psr-4": {
             "Setono\\GLS\\Webservice\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Setono\\GLS\\Webservice\\": "tests/"
         }
     },
     "prefer-stable": true,
