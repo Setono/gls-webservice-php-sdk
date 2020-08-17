@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Setono\GLS\Webservice\Exception;
 
 use InvalidArgumentException;
+use function Safe\sprintf;
 
 final class ParcelShopNotFoundException extends InvalidArgumentException implements ExceptionInterface
 {
