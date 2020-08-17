@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Setono\GLS\Webservice\Client;
 
+use function Safe\sprintf;
 use Setono\GLS\Webservice\Exception\ClientException;
 use Setono\GLS\Webservice\Exception\ConnectionException;
 use Setono\GLS\Webservice\Exception\ExceptionInterface;
+use Setono\GLS\Webservice\Exception\NoResultException;
 use Setono\GLS\Webservice\Exception\ParcelShopNotFoundException;
 use Setono\GLS\Webservice\Exception\SoapException;
 use Setono\GLS\Webservice\Model\ParcelShop;
@@ -33,18 +35,16 @@ final class Client implements ClientInterface
 
             $result = $response->getResult();
             if (null === $result) {
-                return [];
+                throw new NoResultException($response, sprintf('There was no result for the country code %s', $countryCode));
+            }
+
+            if (!isset($result->GetAllParcelShopsResult->PakkeshopData)) {
+                throw new NoResultException($response, sprintf('There was no result for the country code %s', $countryCode));
             }
 
             $parcelShops = [];
-            foreach ($result->GetAllParcelShopsResult as $parcelShopsResult) {
-                if (!isset($parcelShopsResult->PakkeshopData)) {
-                    continue;
-                }
-
-                foreach ($parcelShopsResult->PakkeshopData as $parcelShop) {
-                    $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
-                }
+            foreach ($result->GetAllParcelShopsResult->PakkeshopData as $parcelShop) {
+                $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
             }
 
             return $parcelShops;
