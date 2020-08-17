@@ -63,7 +63,7 @@ final class Client implements ClientInterface
             $response = $this->sendRequest('GetOneParcelShop', ['ParcelShopNumber' => $parcelShopNumber]);
             $result = $response->getResult();
 
-            if (null === $result) {
+            if (null === $result || !isset($result->GetOneParcelShopResult)) {
                 throw new ParcelShopNotFoundException($parcelShopNumber);
             }
 
