@@ -88,7 +88,7 @@ final class Client implements ClientInterface
             ]);
 
             $result = $response->getResult();
-            if (null === $result) {
+            if (null === $result || !isset($result->GetParcelShopDropPointResult->parcelshops->PakkeshopData)) {
                 return [];
             }
 
@@ -116,7 +116,7 @@ final class Client implements ClientInterface
             ]);
 
             $result = $response->getResult();
-            if (null === $result) {
+            if (null === $result || !isset($result->GetParcelShopsInZipcodeResult->PakkeshopData)) {
                 return [];
             }
 
@@ -146,7 +146,7 @@ final class Client implements ClientInterface
             ]);
 
             $result = $response->getResult();
-            if (null === $result) {
+            if (null === $result || !isset($result->SearchNearestParcelShopsResult->parcelshops->PakkeshopData)) {
                 return [];
             }
 
