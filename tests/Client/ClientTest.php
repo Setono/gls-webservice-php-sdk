@@ -14,6 +14,22 @@ use SoapFault;
 
 final class ClientTest extends TestCase
 {
+    /************************************
+     * Testing method getAllParcelShops *
+     ***********************************/
+
+    /**
+     * @test
+     */
+    public function it_returns_all_parcel_shops(): void
+    {
+        $client = $this->getClient();
+
+        $parcelShops = $client->getAllParcelShops('DK');
+        self::assertNotEmpty($parcelShops);
+        self::assertContainsOnlyInstancesOf(ParcelShop::class, $parcelShops);
+    }
+
     /***********************************
      * Testing method getOneParcelShop *
      **********************************/
@@ -39,7 +55,7 @@ final class ClientTest extends TestCase
 
         $parcelShop = $client->getOneParcelShop('97891');
 
-        $this->assertInstanceOf(ParcelShop::class, $parcelShop);
+        self::assertInstanceOf(ParcelShop::class, $parcelShop);
     }
 
     /*******************************************
@@ -55,7 +71,7 @@ final class ClientTest extends TestCase
 
         $result = $client->searchNearestParcelShops('1234', '1234', 'NOT_A_COUNTRY');
 
-        $this->assertEmpty($result);
+        self::assertEmpty($result);
     }
 
     /**
@@ -67,9 +83,9 @@ final class ClientTest extends TestCase
 
         $parcelShops = $client->searchNearestParcelShops('Købmagergade 10', '1160', 'DK');
 
-        $this->assertNotEmpty($parcelShops);
+        self::assertNotEmpty($parcelShops);
         foreach ($parcelShops as $parcelShop) {
-            $this->assertInstanceOf(ParcelShop::class, $parcelShop);
+            self::assertInstanceOf(ParcelShop::class, $parcelShop);
         }
     }
 
