@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Setono\GLS\Webservice\Exception\ConnectionException;
 use Setono\GLS\Webservice\Exception\ParcelShopNotFoundException;
 use Setono\GLS\Webservice\Factory\SoapClientFactory;
+use Setono\GLS\Webservice\Factory\SoapClientFactoryInterface;
 use Setono\GLS\Webservice\Model\ParcelShop;
 use SoapClient;
 use SoapFault;
@@ -119,11 +120,24 @@ final class ClientTest extends TestCase
 
     private function getClient(SoapClient $soapClient = null): Client
     {
-        if (null === $soapClient) {
-            $factory = new SoapClientFactory('https://www.gls.dk/webservices_v4/wsShopFinder.asmx?WSDL');
-            $soapClient = $factory->create();
+        $factory = new SoapClientFactory('https://www.gls.dk/webservices_v4/wsShopFinder.asmx?WSDL');
+
+        if (null !== $soapClient) {
+            $factory = new class($soapClient) implements SoapClientFactoryInterface {
+                private SoapClient $soapClient;
+
+                public function __construct(SoapClient $soapClient)
+                {
+                    $this->soapClient = $soapClient;
+                }
+
+                public function create(array $options = []): SoapClient
+                {
+                    return $this->soapClient;
+                }
+            };
         }
 
-        return new Client($soapClient);
+        return new Client($factory);
     }
 }
