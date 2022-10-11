@@ -25,9 +25,7 @@ use Setono\GLS\Webservice\Client\Client;
 use Setono\GLS\Webservice\Factory\SoapClientFactory;
 use Setono\GLS\Webservice\Model\ParcelShop;
 
-$factory = new SoapClientFactory('https://www.gls.dk/webservices_v4/wsShopFinder.asmx?WSDL');
-
-$client = new Client($factory->create());
+$client = new Client(new SoapClientFactory('https://www.gls.dk/webservices_v4/wsShopFinder.asmx?WSDL'));
 
 /** @var ParcelShop[] $parcelShops */
 $parcelShops = $client->searchNearestParcelShops('Street', '12313', 'DK');

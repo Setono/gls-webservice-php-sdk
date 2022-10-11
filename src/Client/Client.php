@@ -10,6 +10,7 @@ use Setono\GLS\Webservice\Exception\ExceptionInterface;
 use Setono\GLS\Webservice\Exception\NoResultException;
 use Setono\GLS\Webservice\Exception\ParcelShopNotFoundException;
 use Setono\GLS\Webservice\Exception\SoapException;
+use Setono\GLS\Webservice\Factory\SoapClientFactoryInterface;
 use Setono\GLS\Webservice\Model\ParcelShop;
 use Setono\GLS\Webservice\Response\Response;
 use SoapClient;
@@ -17,11 +18,13 @@ use SoapFault;
 
 final class Client implements ClientInterface
 {
-    private SoapClient $soapClient;
+    private ?SoapClient $soapClient = null;
 
-    public function __construct(SoapClient $soapClient)
+    private SoapClientFactoryInterface $soapClientFactory;
+
+    public function __construct(SoapClientFactoryInterface $soapClientFactory)
     {
-        $this->soapClient = $soapClient;
+        $this->soapClientFactory = $soapClientFactory;
     }
 
     public function getAllParcelShops(string $countryCode): array
@@ -165,10 +168,12 @@ final class Client implements ClientInterface
 
     private function sendRequest(string $method, array $arguments = []): Response
     {
-        try {
-            $result = $this->soapClient->{$method}($arguments);
+        $soapClient = $this->getSoapClient();
 
-            return new Response($this->soapClient->__getLastResponseHeaders(), $this->soapClient->__getLastResponse(), $result);
+        try {
+            $result = $soapClient->{$method}($arguments);
+
+            return new Response($soapClient->__getLastResponseHeaders(), $soapClient->__getLastResponse(), $result);
         } catch (SoapFault $soapFault) {
             throw $this->parseException($soapFault);
         }
@@ -190,12 +195,23 @@ final class Client implements ClientInterface
         $responseHeaders = $this->soapClient->__getLastResponseHeaders();
 
         if ($responseHeaders !== null) {
+            $soapClient = $this->getSoapClient();
+
             return new ClientException(
                 $soapFault,
-                new Response($responseHeaders, $this->soapClient->__getLastResponse(), null)
+                new Response($responseHeaders, $soapClient->__getLastResponse(), null)
             );
         }
 
         return new SoapException($soapFault, $soapFault->getMessage());
+    }
+
+    private function getSoapClient(): SoapClient
+    {
+        if (null === $this->soapClient) {
+            $this->soapClient = $this->soapClientFactory->create();
+        }
+
+        return $this->soapClient;
     }
 }

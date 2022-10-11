@@ -23,10 +23,13 @@
       <code>$result-&gt;SearchNearestParcelShopsResult-&gt;parcelshops</code>
     </MixedPropertyFetch>
     <PossiblyNullArgument occurrences="3">
-      <code>$this-&gt;soapClient-&gt;__getLastResponse()</code>
-      <code>$this-&gt;soapClient-&gt;__getLastResponse()</code>
-      <code>$this-&gt;soapClient-&gt;__getLastResponseHeaders()</code>
+      <code>$soapClient-&gt;__getLastResponse()</code>
+      <code>$soapClient-&gt;__getLastResponse()</code>
+      <code>$soapClient-&gt;__getLastResponseHeaders()</code>
     </PossiblyNullArgument>
+    <PossiblyNullReference occurrences="1">
+      <code>__getLastResponseHeaders</code>
+    </PossiblyNullReference>
     <UnnecessaryVarAnnotation occurrences="1">
       <code>string|null</code>
     </UnnecessaryVarAnnotation>

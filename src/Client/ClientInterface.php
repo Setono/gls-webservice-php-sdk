@@ -24,8 +24,6 @@ interface ClientInterface
     /**
      * Get one ParcelShop.
      *
-     *
-     *
      * @throws ParcelShopNotFoundException
      */
     public function getOneParcelShop(string $parcelShopNumber): ParcelShop;
@@ -53,7 +51,6 @@ interface ClientInterface
      *
      * NOTICE: It looks like (judging by the returned results) this returns the same results as getParcelShopDropPoint
      * but GLS' IT support does not know, so the safest bet is to use this method because this is the one they recommend
-     *
      *
      * @return ParcelShop[]
      */
