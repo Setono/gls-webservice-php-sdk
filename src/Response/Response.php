@@ -10,11 +10,9 @@ use stdClass;
 
 final class Response
 {
-    /** @var PsrResponse */
-    private $response;
+    private PsrResponse $response;
 
-    /** @var stdClass|null */
-    private $result;
+    private ?stdClass $result;
 
     public function __construct(string $headers, string $body, ?stdClass $result)
     {

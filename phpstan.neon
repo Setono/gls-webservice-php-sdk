@@ -1,6 +1,0 @@
-parameters:
-	checkMissingIterableValueType: false
-	reportUnmatchedIgnoredErrors: true
-
-	ignoreErrors:
-		- '/Variable method call on SoapClient\./'

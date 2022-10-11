@@ -9,8 +9,7 @@ use SoapFault;
 
 final class ClientException extends SoapException
 {
-    /** @var Response */
-    private $response;
+    private Response $response;
 
     public function __construct(SoapFault $soapFault, Response $response)
     {

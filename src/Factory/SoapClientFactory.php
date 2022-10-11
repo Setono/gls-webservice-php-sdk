@@ -8,8 +8,7 @@ use SoapClient;
 
 final class SoapClientFactory implements SoapClientFactoryInterface
 {
-    /** @var string */
-    private $wsdl;
+    private string $wsdl;
 
     public function __construct(string $wsdl)
     {
