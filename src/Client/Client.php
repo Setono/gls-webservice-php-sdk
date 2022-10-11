@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\GLS\Webservice\Client;
 
-use function Safe\sprintf;
 use Setono\GLS\Webservice\Exception\ClientException;
 use Setono\GLS\Webservice\Exception\ConnectionException;
 use Setono\GLS\Webservice\Exception\ExceptionInterface;
@@ -18,8 +17,7 @@ use SoapFault;
 
 final class Client implements ClientInterface
 {
-    /** @var SoapClient */
-    private $soapClient;
+    private SoapClient $soapClient;
 
     public function __construct(SoapClient $soapClient)
     {
@@ -167,8 +165,6 @@ final class Client implements ClientInterface
 
     private function sendRequest(string $method, array $arguments = []): Response
     {
-        $result = null;
-
         try {
             $result = $this->soapClient->{$method}($arguments);
 
@@ -189,13 +185,14 @@ final class Client implements ClientInterface
         /**
          * The response are null if no response was fetched (i.e. no connection)
          *
-         * @var string|null
+         * @var string|null $responseHeaders
          */
         $responseHeaders = $this->soapClient->__getLastResponseHeaders();
 
         if ($responseHeaders !== null) {
             return new ClientException(
-                $soapFault, new Response($responseHeaders, $this->soapClient->__getLastResponse(), null)
+                $soapFault,
+                new Response($responseHeaders, $this->soapClient->__getLastResponse(), null)
             );
         }
 

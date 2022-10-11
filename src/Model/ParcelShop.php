@@ -8,41 +8,30 @@ use stdClass;
 
 final class ParcelShop
 {
-    /** @var string */
-    private $number;
+    private string $number;
 
-    /** @var string */
-    private $companyName;
+    private string $companyName;
 
-    /** @var string */
-    private $streetName;
+    private string $streetName;
 
-    /** @var string */
-    private $streetName2;
+    private string $streetName2;
 
-    /** @var string */
-    private $zipCode;
+    private string $zipCode;
 
-    /** @var string */
-    private $city;
+    private string $city;
 
-    /** @var string */
-    private $countryCode;
+    private string $countryCode;
 
-    /** @var string */
-    private $telephone;
+    private string $telephone;
 
-    /** @var string */
-    private $longitude;
+    private string $longitude;
 
-    /** @var string */
-    private $latitude;
+    private string $latitude;
 
-    /** @var int */
-    private $distanceMetersAsTheCrowFlies;
+    private int $distanceMetersAsTheCrowFlies;
 
     /** @var OpeningHours[] */
-    private $openingHours;
+    private array $openingHours;
 
     public function __construct(
         string $number,

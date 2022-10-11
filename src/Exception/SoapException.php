@@ -9,8 +9,7 @@ use SoapFault;
 
 class SoapException extends RuntimeException implements ExceptionInterface
 {
-    /** @var SoapFault */
-    private $soapFault;
+    private SoapFault $soapFault;
 
     public function __construct(SoapFault $soapFault, string $message)
     {

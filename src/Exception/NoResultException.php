@@ -9,8 +9,7 @@ use Setono\GLS\Webservice\Response\Response;
 
 final class NoResultException extends RuntimeException
 {
-    /** @var Response */
-    private $response;
+    private Response $response;
 
     public function __construct(Response $response, string $message = 'The response result was empty')
     {

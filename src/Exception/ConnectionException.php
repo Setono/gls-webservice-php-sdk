@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Setono\GLS\Webservice\Exception;
 
-use function Safe\sprintf;
 use SoapFault;
 
 final class ConnectionException extends SoapException

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.28.0@52e96bea381e6cb07a672aefec791a5817694a26">
+  <file src="src/Client/Client.php">
+    <MixedArgument occurrences="6">
+      <code>$parcelShop</code>
+      <code>$parcelShop</code>
+      <code>$parcelShop</code>
+      <code>$parcelShop</code>
+      <code>$result</code>
+      <code>$result-&gt;GetOneParcelShopResult</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="5">
+      <code>$parcelShop</code>
+      <code>$parcelShop</code>
+      <code>$parcelShop</code>
+      <code>$parcelShop</code>
+      <code>$result</code>
+    </MixedAssignment>
+    <MixedPropertyFetch occurrences="4">
+      <code>$result-&gt;GetAllParcelShopsResult-&gt;PakkeshopData</code>
+      <code>$result-&gt;GetParcelShopDropPointResult-&gt;parcelshops</code>
+      <code>$result-&gt;GetParcelShopsInZipcodeResult-&gt;PakkeshopData</code>
+      <code>$result-&gt;SearchNearestParcelShopsResult-&gt;parcelshops</code>
+    </MixedPropertyFetch>
+    <PossiblyNullArgument occurrences="3">
+      <code>$this-&gt;soapClient-&gt;__getLastResponse()</code>
+      <code>$this-&gt;soapClient-&gt;__getLastResponse()</code>
+      <code>$this-&gt;soapClient-&gt;__getLastResponseHeaders()</code>
+    </PossiblyNullArgument>
+    <UnnecessaryVarAnnotation occurrences="1">
+      <code>string|null</code>
+    </UnnecessaryVarAnnotation>
+  </file>
+  <file src="src/Model/OpeningHours.php">
+    <MixedArgument occurrences="3">
+      <code>$result-&gt;day</code>
+      <code>$result-&gt;openAt-&gt;From</code>
+      <code>$result-&gt;openAt-&gt;To</code>
+    </MixedArgument>
+    <MixedPropertyFetch occurrences="2">
+      <code>$result-&gt;openAt-&gt;From</code>
+      <code>$result-&gt;openAt-&gt;To</code>
+    </MixedPropertyFetch>
+  </file>
+  <file src="src/Model/ParcelShop.php">
+    <MixedArgument occurrences="12">
+      <code>$result-&gt;CityName</code>
+      <code>$result-&gt;CompanyName</code>
+      <code>$result-&gt;CountryCodeISO3166A2</code>
+      <code>$result-&gt;DistanceMetersAsTheCrowFlies</code>
+      <code>$result-&gt;Latitude</code>
+      <code>$result-&gt;Longitude</code>
+      <code>$result-&gt;Number</code>
+      <code>$result-&gt;Streetname</code>
+      <code>$result-&gt;Streetname2</code>
+      <code>$result-&gt;Telephone</code>
+      <code>$result-&gt;ZipCode</code>
+      <code>$weekday</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$weekday</code>
+    </MixedAssignment>
+    <MixedPropertyFetch occurrences="1">
+      <code>$result-&gt;OpeningHours-&gt;Weekday</code>
+    </MixedPropertyFetch>
+    <MixedPropertyTypeCoercion occurrences="1">
+      <code>$openingHours</code>
+    </MixedPropertyTypeCoercion>
+  </file>
+  <file src="src/Response/Response.php">
+    <DeprecatedFunction occurrences="1">
+      <code>parse_response($headers . "\r\n" . $body)</code>
+    </DeprecatedFunction>
+  </file>
+  <file src="tests/Client/ClientTest.php">
+    <MissingParamType occurrences="6">
+      <code>$action</code>
+      <code>$location</code>
+      <code>$one_way</code>
+      <code>$request</code>
+      <code>$version</code>
+      <code>$wsdl</code>
+    </MissingParamType>
+  </file>
+  <file src="tests/Model/ParcelShopTest.php">
+    <MixedPropertyAssignment occurrences="2">
+      <code>$data-&gt;OpeningHours-&gt;Weekday[0]-&gt;openAt</code>
+      <code>$data-&gt;OpeningHours-&gt;Weekday[0]-&gt;openAt</code>
+    </MixedPropertyAssignment>
+  </file>
+</files>

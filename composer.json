@@ -1,8 +1,8 @@
 {
     "name": "setono/gls-webservice-php-sdk",
-    "type": "library",
     "description": "A PHP SDK for the GLS webservice",
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Joachim Løvgaard",
@@ -11,24 +11,17 @@
     ],
     "require": {
         "php": ">=7.4",
-        "ext-dom": "*",
         "ext-soap": "*",
         "guzzlehttp/psr7": "^1.5",
-        "psr/http-message": "^1.0",
-        "thecodingmachine/safe": "^1.0"
+        "psr/http-message": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.0",
-        "setono/code-quality-pack": "^1.4"
+        "infection/infection": "^0.26",
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.17",
+        "setono/code-quality-pack": "^2.2"
     },
-    "config": {
-        "sort-packages": true
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.3-dev"
-        }
-    },
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Setono\\GLS\\Webservice\\": "src/"
@@ -39,11 +32,18 @@
             "Setono\\GLS\\Webservice\\": "tests/"
         }
     },
-    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "dealerdirect/phpcodesniffer-composer-installer": false,
+            "infection/extension-installer": true
+        },
+        "sort-packages": true
+    },
     "scripts": {
-        "analyse": "vendor/bin/phpstan analyse -c phpstan.neon -l max src",
-        "check-style": "vendor/bin/ecs check --ansi src/ tests/",
-        "fix-style": "vendor/bin/ecs check --fix --ansi src/ tests/",
-        "phpunit": "vendor/bin/phpunit"
+        "analyse": "psalm",
+        "check-style": "ecs check",
+        "fix-style": "ecs check --fix",
+        "phpunit": "phpunit"
     }
 }
