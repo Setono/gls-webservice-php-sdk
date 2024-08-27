@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Setono\GLS\Webservice\Response;
 
 use GuzzleHttp\Psr7\Message;
-use GuzzleHttp\Psr7\Response as PsrResponse;
+use Psr\Http\Message\ResponseInterface;
 use stdClass;
 
 final class Response
 {
-    private PsrResponse $response;
+    private ResponseInterface $response;
 
     private ?stdClass $result;
 
