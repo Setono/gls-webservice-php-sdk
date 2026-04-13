@@ -103,10 +103,52 @@ parameters:
 			path: tests/Client/ClientTest.php
 
 		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Setono\\\\GLS\\\\Webservice\\\\Exception\\\\ExceptionInterface'' and Setono\\GLS\\Webservice\\Exception\\ClientException will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/Exception/ExceptionTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Setono\\\\GLS\\\\Webservice\\\\Exception\\\\ExceptionInterface'' and Setono\\GLS\\Webservice\\Exception\\ConnectionException will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/Exception/ExceptionTest.php
+
+		-
 			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Setono\\\\GLS\\\\Webservice\\\\Exception\\\\ExceptionInterface'' and Setono\\GLS\\Webservice\\Exception\\NoResultException will always evaluate to true\.$#'
 			identifier: staticMethod.alreadyNarrowedType
 			count: 1
-			path: tests/Exception/NoResultExceptionTest.php
+			path: tests/Exception/ExceptionTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Setono\\\\GLS\\\\Webservice\\\\Exception\\\\ExceptionInterface'' and Setono\\GLS\\Webservice\\Exception\\ParcelShopNotFoundException will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/Exception/ExceptionTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Setono\\\\GLS\\\\Webservice\\\\Exception\\\\ExceptionInterface'' and Setono\\GLS\\Webservice\\Exception\\SoapException will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/Exception/ExceptionTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Setono\\\\GLS\\\\Webservice\\\\Exception\\\\SoapException'' and Setono\\GLS\\Webservice\\Exception\\ClientException will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/Exception/ExceptionTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Setono\\\\GLS\\\\Webservice\\\\Exception\\\\SoapException'' and Setono\\GLS\\Webservice\\Exception\\ConnectionException will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 1
+			path: tests/Exception/ExceptionTest.php
+
+		-
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''SoapClient'' and SoapClient will always evaluate to true\.$#'
+			identifier: staticMethod.alreadyNarrowedType
+			count: 2
+			path: tests/Factory/SoapClientFactoryTest.php
 
 		-
 			message: '#^Dynamic call to static method PHPUnit\\Framework\\Assert\:\:assertCount\(\)\.$#'
