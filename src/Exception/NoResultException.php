@@ -7,7 +7,7 @@ namespace Setono\GLS\Webservice\Exception;
 use RuntimeException;
 use Setono\GLS\Webservice\Response\Response;
 
-final class NoResultException extends RuntimeException
+final class NoResultException extends RuntimeException implements ExceptionInterface
 {
     private Response $response;
 

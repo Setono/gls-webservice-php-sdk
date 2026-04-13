@@ -23,10 +23,13 @@ final class OpeningHours
 
     public static function createFromStdClass(stdClass $result): self
     {
+        /** @var stdClass $openAt */
+        $openAt = $result->openAt;
+
         return new self(
-            $result->day,
-            $result->openAt->From,
-            $result->openAt->To,
+            (string) $result->day,
+            (string) $openAt->From,
+            (string) $openAt->To,
         );
     }
 

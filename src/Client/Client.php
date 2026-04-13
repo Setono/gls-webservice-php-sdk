@@ -15,6 +15,7 @@ use Setono\GLS\Webservice\Model\ParcelShop;
 use Setono\GLS\Webservice\Response\Response;
 use SoapClient;
 use SoapFault;
+use stdClass;
 
 final class Client implements ClientInterface
 {
@@ -43,18 +44,9 @@ final class Client implements ClientInterface
                 throw new NoResultException($response, sprintf('There was no result for the country code %s', $countryCode));
             }
 
-            $parcelShops = [];
-            foreach ($result->GetAllParcelShopsResult->PakkeshopData as $parcelShop) {
-                $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
-            }
-
-            return $parcelShops;
+            return self::mapParcelShops($result->GetAllParcelShopsResult->PakkeshopData);
         } catch (ClientException $e) {
-            if (!$e->getResponse()->isOk() || $e->getResponse()->getResult() === null) {
-                return [];
-            }
-
-            throw $e;
+            return [];
         }
     }
 
@@ -68,7 +60,12 @@ final class Client implements ClientInterface
                 throw new ParcelShopNotFoundException($parcelShopNumber);
             }
 
-            return ParcelShop::createFromStdClass($result->GetOneParcelShopResult);
+            $shopData = $result->GetOneParcelShopResult;
+            if (!$shopData instanceof stdClass) {
+                throw new ParcelShopNotFoundException($parcelShopNumber);
+            }
+
+            return ParcelShop::createFromStdClass($shopData);
         } catch (ClientException $e) {
             if ($e->getResponse()->is404() || $e->getResponse()->getResult() === null) {
                 throw new ParcelShopNotFoundException($parcelShopNumber);
@@ -93,18 +90,9 @@ final class Client implements ClientInterface
                 return [];
             }
 
-            $parcelShops = [];
-            foreach ($result->GetParcelShopDropPointResult->parcelshops->PakkeshopData as $parcelShop) {
-                $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
-            }
-
-            return $parcelShops;
+            return self::mapParcelShops($result->GetParcelShopDropPointResult->parcelshops->PakkeshopData);
         } catch (ClientException $e) {
-            if (!$e->getResponse()->isOk() || $e->getResponse()->getResult() === null) {
-                return [];
-            }
-
-            throw $e;
+            return [];
         }
     }
 
@@ -121,18 +109,9 @@ final class Client implements ClientInterface
                 return [];
             }
 
-            $parcelShops = [];
-            foreach ($result->GetParcelShopsInZipcodeResult->PakkeshopData as $parcelShop) {
-                $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
-            }
-
-            return $parcelShops;
+            return self::mapParcelShops($result->GetParcelShopsInZipcodeResult->PakkeshopData);
         } catch (ClientException $e) {
-            if (!$e->getResponse()->isOk() || $e->getResponse()->getResult() === null) {
-                return [];
-            }
-
-            throw $e;
+            return [];
         }
     }
 
@@ -151,29 +130,49 @@ final class Client implements ClientInterface
                 return [];
             }
 
-            $parcelShops = [];
-            foreach ($result->SearchNearestParcelShopsResult->parcelshops->PakkeshopData as $parcelShop) {
-                $parcelShops[] = ParcelShop::createFromStdClass($parcelShop);
-            }
-
-            return $parcelShops;
+            return self::mapParcelShops($result->SearchNearestParcelShopsResult->parcelshops->PakkeshopData);
         } catch (ClientException $e) {
-            if (!$e->getResponse()->isOk() || $e->getResponse()->getResult() === null) {
-                return [];
-            }
-
-            throw $e;
+            return [];
         }
     }
 
+    /**
+     * @param array<array-key, stdClass>|stdClass $data
+     *
+     * @return list<ParcelShop>
+     */
+    private static function mapParcelShops(array|stdClass $data): array
+    {
+        if ($data instanceof stdClass) {
+            return [ParcelShop::createFromStdClass($data)];
+        }
+
+        $parcelShops = [];
+        foreach ($data as $item) {
+            if ($item instanceof stdClass) {
+                $parcelShops[] = ParcelShop::createFromStdClass($item);
+            }
+        }
+
+        return $parcelShops;
+    }
+
+    /**
+     * @param array<string, mixed> $arguments
+     */
     private function sendRequest(string $method, array $arguments = []): Response
     {
         $soapClient = $this->getSoapClient();
 
         try {
+            /** @var stdClass|null $result */
             $result = $soapClient->{$method}($arguments);
 
-            return new Response($soapClient->__getLastResponseHeaders(), $soapClient->__getLastResponse(), $result);
+            return new Response(
+                (string) $soapClient->__getLastResponseHeaders(),
+                (string) $soapClient->__getLastResponse(),
+                $result instanceof stdClass ? $result : null,
+            );
         } catch (SoapFault $soapFault) {
             throw $this->parseException($soapFault);
         }
@@ -187,19 +186,13 @@ final class Client implements ClientInterface
             return new ConnectionException($soapFault);
         }
 
-        /**
-         * The response are null if no response was fetched (i.e. no connection)
-         *
-         * @var string|null $responseHeaders
-         */
-        $responseHeaders = $this->soapClient->__getLastResponseHeaders();
+        $soapClient = $this->getSoapClient();
+        $responseHeaders = $soapClient->__getLastResponseHeaders();
 
-        if ($responseHeaders !== null) {
-            $soapClient = $this->getSoapClient();
-
+        if (is_string($responseHeaders)) {
             return new ClientException(
                 $soapFault,
-                new Response($responseHeaders, $soapClient->__getLastResponse(), null),
+                new Response($responseHeaders, (string) $soapClient->__getLastResponse(), null),
             );
         }
 
