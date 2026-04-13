@@ -100,12 +100,12 @@ final class ClientTest extends TestCase
     public function it_handles_timeout(): void
     {
         $soapClient = new class() extends SoapClient {
-            public function __construct($wsdl = 'https://www.gls.dk/webservices_v4/wsShopFinder.asmx?WSDL', array $options = null)
+            public function __construct(?string $wsdl = 'https://www.gls.dk/webservices_v4/wsShopFinder.asmx?WSDL', ?array $options = null)
             {
                 parent::__construct($wsdl, []);
             }
 
-            public function __doRequest($request, $location, $action, $version, $one_way = 0): void
+            public function __doRequest(string $request, string $location, string $action, int $version, bool $oneWay = false): ?string
             {
                 throw new SoapFault('HTTP', 'Could not connect to host');
             }
@@ -118,7 +118,7 @@ final class ClientTest extends TestCase
         $client->getAllParcelShops('DK');
     }
 
-    private function getClient(SoapClient $soapClient = null): Client
+    private function getClient(?SoapClient $soapClient = null): Client
     {
         $factory = new SoapClientFactory('https://www.gls.dk/webservices_v4/wsShopFinder.asmx?WSDL');
 

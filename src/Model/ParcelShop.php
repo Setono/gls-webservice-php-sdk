@@ -45,7 +45,7 @@ final class ParcelShop
         string $streetName2 = '',
         string $telephone = '',
         int $distanceMetersAsTheCrowFlies = 0,
-        array $openingHours = []
+        array $openingHours = [],
     ) {
         // mandatory attributes
         $this->number = $number;
@@ -86,7 +86,7 @@ final class ParcelShop
             $result->Streetname2,
             $result->Telephone,
             $result->DistanceMetersAsTheCrowFlies,
-            $openingHours
+            $openingHours,
         );
     }
 

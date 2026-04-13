@@ -26,7 +26,7 @@ final class OpeningHours
         return new self(
             $result->day,
             $result->openAt->From,
-            $result->openAt->To
+            $result->openAt->To,
         );
     }
 
