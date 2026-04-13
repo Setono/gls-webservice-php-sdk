@@ -133,4 +133,30 @@ final class ParcelShopTest extends TestCase
         $openingHours = $parcelShop->getOpeningHours();
         $this->assertCount(0, $openingHours);
     }
+
+    /**
+     * @test
+     */
+    public function it_parses_class_with_missing_optional_properties(): void
+    {
+        $data = new stdClass();
+        $data->Number = '1234';
+        $data->CompanyName = 'Shell';
+        $data->Streetname = 'Street 1';
+        $data->ZipCode = '556677';
+        $data->CityName = 'City';
+        $data->CountryCodeISO3166A2 = 'DK';
+        $data->Longitude = '12.1231';
+        $data->Latitude = '54.777';
+
+        $parcelShop = ParcelShop::createFromStdClass($data);
+
+        $this->assertSame('1234', $parcelShop->getNumber());
+        $this->assertSame('Shell', $parcelShop->getCompanyName());
+        $this->assertSame('Street 1', $parcelShop->getStreetName());
+        $this->assertSame('', $parcelShop->getStreetName2());
+        $this->assertSame('', $parcelShop->getTelephone());
+        $this->assertSame(0, $parcelShop->getDistanceMetersAsTheCrowFlies());
+        $this->assertCount(0, $parcelShop->getOpeningHours());
+    }
 }

@@ -70,22 +70,24 @@ final class ParcelShop
 
         if (isset($result->OpeningHours, $result->OpeningHours->Weekday) && is_array($result->OpeningHours->Weekday)) {
             foreach ($result->OpeningHours->Weekday as $weekday) {
-                $openingHours[] = OpeningHours::createFromStdClass($weekday);
+                if ($weekday instanceof stdClass) {
+                    $openingHours[] = OpeningHours::createFromStdClass($weekday);
+                }
             }
         }
 
         return new self(
-            $result->Number,
-            $result->CompanyName,
-            $result->Streetname,
-            $result->ZipCode,
-            $result->CityName,
-            $result->CountryCodeISO3166A2,
-            $result->Longitude,
-            $result->Latitude,
-            $result->Streetname2,
-            $result->Telephone,
-            $result->DistanceMetersAsTheCrowFlies,
+            (string) $result->Number,
+            (string) $result->CompanyName,
+            (string) $result->Streetname,
+            (string) $result->ZipCode,
+            (string) $result->CityName,
+            (string) $result->CountryCodeISO3166A2,
+            (string) $result->Longitude,
+            (string) $result->Latitude,
+            (string) ($result->Streetname2 ?? ''),
+            (string) ($result->Telephone ?? ''),
+            (int) ($result->DistanceMetersAsTheCrowFlies ?? 0),
             $openingHours,
         );
     }
