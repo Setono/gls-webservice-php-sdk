@@ -58,6 +58,7 @@ jobs:
                     - "8.4"
 
                 dependencies:
+                    - "lowest"
                     - "highest"
 
         steps:
@@ -96,6 +97,7 @@ jobs:
                     - "8.4"
 
                 dependencies:
+                    - "lowest"
                     - "highest"
 
         steps:
