@@ -199,7 +199,7 @@ final class Client implements ClientInterface
 
             return new ClientException(
                 $soapFault,
-                new Response($responseHeaders, $soapClient->__getLastResponse(), null)
+                new Response($responseHeaders, $soapClient->__getLastResponse(), null),
             );
         }
 

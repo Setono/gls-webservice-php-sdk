@@ -10,16 +10,13 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.2",
         "ext-soap": "*",
-        "guzzlehttp/psr7": "^1.9 || ^2.0",
-        "psr/http-message": "^1.0"
+        "guzzlehttp/psr7": "^2.7",
+        "psr/http-message": "^1.1 || ^2.0"
     },
     "require-dev": {
-        "infection/infection": "^0.26",
-        "phpunit/phpunit": "^9.5",
-        "psalm/plugin-phpunit": "^0.17",
-        "setono/code-quality-pack": "^2.2"
+        "setono/code-quality-pack": "^3.2"
     },
     "prefer-stable": true,
     "autoload": {
@@ -41,7 +38,7 @@
         "sort-packages": true
     },
     "scripts": {
-        "analyse": "psalm",
+        "analyse": "phpstan analyse",
         "check-style": "ecs check",
         "fix-style": "ecs check --fix",
         "phpunit": "phpunit"

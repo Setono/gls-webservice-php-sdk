@@ -2,7 +2,7 @@ name: "build"
 on:
     push:
         branches:
-            - "master"
+            - "3.x"
     pull_request: ~
     workflow_dispatch: ~
 
@@ -15,7 +15,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.4"
+                    - "8.2"
 
                 dependencies:
                     - "highest"
@@ -53,9 +53,9 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.4"
-                    - "8.0"
-                    - "8.1"
+                    - "8.2"
+                    - "8.3"
+                    - "8.4"
 
                 dependencies:
                     - "highest"
@@ -91,9 +91,9 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.4"
-                    - "8.0"
-                    - "8.1"
+                    - "8.2"
+                    - "8.3"
+                    - "8.4"
 
                 dependencies:
                     - "highest"
@@ -125,9 +125,9 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "7.4"
-                    - "8.0"
-                    - "8.1"
+                    - "8.2"
+                    - "8.3"
+                    - "8.4"
 
                 dependencies:
                     - "lowest"
@@ -160,7 +160,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "8.1"
+                    - "8.4"
 
                 dependencies:
                     - "highest"
@@ -197,7 +197,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - "8.1"
+                    - "8.4"
 
                 dependencies:
                     - "highest"

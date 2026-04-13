@@ -105,7 +105,7 @@ final class ClientTest extends TestCase
                 parent::__construct($wsdl, []);
             }
 
-            public function __doRequest($request, $location, $action, $version, $one_way = 0): void
+            public function __doRequest(string $request, string $location, string $action, int $version, bool $oneWay = false): ?string
             {
                 throw new SoapFault('HTTP', 'Could not connect to host');
             }
