@@ -55,6 +55,12 @@ parameters:
 			path: src/Client/Client.php
 
 		-
+			message: '#^Variable method call on SoapClient\.$#'
+			identifier: method.dynamicName
+			count: 1
+			path: src/Client/Client.php
+
+		-
 			message: '#^Method Setono\\GLS\\Webservice\\Factory\\SoapClientFactory\:\:create\(\) has parameter \$options with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -187,9 +193,9 @@ parameters:
 			path: src/Model/ParcelShop.php
 
 		-
-			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertContainsOnlyInstancesOf\(\) with ''Setono\\\\GLS\\\\Webservice\\\\Model\\\\ParcelShop'' and array\<Setono\\GLS\\Webservice\\Model\\ParcelShop\> will always evaluate to true\.$#'
+			message: '#^Call to static method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Setono\\\\GLS\\\\Webservice\\\\Model\\\\ParcelShop'' and Setono\\GLS\\Webservice\\Model\\ParcelShop will always evaluate to true\.$#'
 			identifier: staticMethod.alreadyNarrowedType
-			count: 1
+			count: 2
 			path: tests/Client/ClientTest.php
 
 		-
@@ -211,13 +217,13 @@ parameters:
 			path: tests/Client/ClientTest.php
 
 		-
-			message: '#^Method SoapClient@anonymous/tests/Client/ClientTest\.php\:102\:\:__construct\(\) has parameter \$wsdl with no type specified\.$#'
-			identifier: missingType.parameter
-			count: 1
-			path: tests/Client/ClientTest.php
+			message: '#^Dynamic call to static method PHPUnit\\Framework\\Assert\:\:assertCount\(\)\.$#'
+			identifier: staticMethod.dynamicCall
+			count: 3
+			path: tests/Model/ParcelShopTest.php
 
 		-
-			message: '#^Parameter \#1 \$wsdl of method SoapClient\:\:__construct\(\) expects string\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: tests/Client/ClientTest.php
+			message: '#^Dynamic call to static method PHPUnit\\Framework\\Assert\:\:assertSame\(\)\.$#'
+			identifier: staticMethod.dynamicCall
+			count: 36
+			path: tests/Model/ParcelShopTest.php
